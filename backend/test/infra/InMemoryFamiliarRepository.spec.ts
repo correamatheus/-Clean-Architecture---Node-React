@@ -3,7 +3,7 @@ import { Familiar } from '../../src/domain/entities/Familiar';
 import { randomUUID } from 'crypto';
 
 describe('InMemoryFamiliarRepository', () => {
-  it('cria, busca e atualiza corretamente', async () => {
+  it('Deve criar, buscar e atualizar corretamente', async () => {
     const repo = new InMemoryFamiliarRepository();
     const f = new Familiar({
       id: randomUUID(),

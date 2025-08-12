@@ -14,7 +14,7 @@ export class Familiar {
         }
 
         if (isNaN(Date.parse(props.dataNascimentoISO))) {
-            throw new Error('dataNascimentoISO inválida');
+            throw new Error('Data de nascimento inválida');
         }
 
         this.props = props
