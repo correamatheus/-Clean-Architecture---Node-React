@@ -18,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/novo" element={<FamiliarForm />} />
+            <Route path="/editar/:id" element={<FamiliarForm />} />
             <Route path="/arvore" element={<FamiliarTree />} />
           </Routes>
         </BrowserRouter>

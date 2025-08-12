@@ -5,6 +5,8 @@ import { CreateFamiliarUseCase } from '../../usecases/CreateFamiliarUseCase';
 import { GetFamiliarWithDescendantsUseCase } from '../../usecases/GetFamiliarWithDescendantsUseCase';
 import { HttpError } from '../../shared/HttpError';
 import { FamliarController } from '../../adapters/controllers/FamiliarController';
+import { EditFamiliarUseCase } from '../../usecases/EditFamiliarUseCase';
+import { DeleteFamiliarUseCase } from '../../usecases/DeleteFamiliarUseCase';
 
 export function createApp() {
   const app = express();
@@ -14,8 +16,9 @@ export function createApp() {
   const repo = new InMemoryFamiliarRepository();
   const createUseCase = new CreateFamiliarUseCase(repo);
   const getUseCase = new GetFamiliarWithDescendantsUseCase(repo);
-
-  const familiarController = new FamliarController(createUseCase, getUseCase, repo);
+  const editUseCase = new EditFamiliarUseCase(repo);
+  const deleteUseCase = new DeleteFamiliarUseCase(repo);
+  const familiarController = new FamliarController(createUseCase, getUseCase, editUseCase, deleteUseCase, repo);
 
   app.get('/health', (req: Request, res: Response) => res.json({ status: 'ok' }));
 

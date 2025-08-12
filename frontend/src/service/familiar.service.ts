@@ -14,5 +14,13 @@ export const familiarService = {
     getById: async (id: string): Promise<{ familiar: Familiar; descendentes: Familiar[] }> => {
         const res = await api.get<{ familiar: Familiar; descendentes: Familiar[] }>(`/familiares/${id}`);
         return res.data;
+    },
+    update: async (id: string, dto: CreateFamiliarDto): Promise<Familiar> => {
+        const res = await api.put<Familiar>(`/familiares/${id}`, dto);
+        return res.data;
+    },
+    delete: async (id: string): Promise<string> => {
+        const res = await api.delete(`/familiares/${id}`);
+        return res.data;
     }
 };

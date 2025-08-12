@@ -1,7 +1,10 @@
 import React, { createContext, useContext, useState } from 'react';
 
 type Toast = { id: string; title: string; description?: string; kind?: 'success' | 'error' | 'info' };
-const ToastContext = createContext<{ push: (t: Toast) => void }>({ push: () => {} });
+const ToastContext = createContext<{
+  error(arg0: string, arg1: string): unknown;
+  success(arg0: string, arg1: string): unknown; push: (t: Toast) => void 
+}>({ push: () => {}, error: () => {}, success: () => {} });
 
 export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
@@ -9,8 +12,14 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setToasts((s) => [...s, t]);
     setTimeout(() => setToasts((s) => s.filter((x) => x.id !== t.id)), 4000);
   };
+  const error = (title: string, description: string) => {
+    push({ id: Math.random().toString(), title, description, kind: 'error' });
+  };
+  const success = (title: string, description: string) => {
+    push({ id: Math.random().toString(), title, description, kind: 'success' });
+  };
   return (
-    <ToastContext.Provider value={{ push }}>
+    <ToastContext.Provider value={{ push, error, success }}>
       {children}
       <div className="fixed bottom-4 right-4 space-y-2 z-50">
         {toasts.map((t) => (
