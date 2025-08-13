@@ -2,6 +2,7 @@ export type FamiliarProps = {
     id: string,
     nome: string,
     dataNascimentoISO: string,
+    identidade: string,
     idPai?: string | null
 }
 
@@ -11,6 +12,10 @@ export class Familiar {
     constructor(props: FamiliarProps) {
         if (!props.nome || props.nome.trim().length == 0) {
             throw new Error("Nome é obrigatório");
+        }
+
+        if (!props.nome || props.nome.trim().length == 0) {
+            throw new Error("Identidade é obrigatório");
         }
 
         if (isNaN(Date.parse(props.dataNascimentoISO))) {
@@ -30,6 +35,10 @@ export class Familiar {
 
     get dataNascimentoISO(): string {
         return this.props.dataNascimentoISO;
+    }
+
+    get identidade(): string {
+        return this.props.identidade;
     }
 
     get idPai(): string | null | undefined {

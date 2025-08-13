@@ -10,6 +10,7 @@ export class CreateFamiliarUseCase {
             id: randomUUID(),
             nome: dto.nome,
             dataNascimentoISO: dto.dataNascimentoISO,
+            identidade: dto.identidade,
             idPai: dto.idPai ?? null
         })
 

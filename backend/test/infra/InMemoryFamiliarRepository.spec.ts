@@ -9,6 +9,7 @@ describe('InMemoryFamiliarRepository', () => {
       id: randomUUID(),
       nome: 'João',
       dataNascimentoISO: '1990-01-01',
+      identidade: '123456789',
       idPai: null
     });
 
