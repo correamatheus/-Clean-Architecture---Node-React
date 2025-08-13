@@ -17,12 +17,13 @@ export function FamiliarForm() {
   const schema = z.object({
     nome: z.string().min(1, 'Nome é obrigatório'),
     dataNascimentoISO: z.string().refine((s) => !Number.isNaN(Date.parse(s)), 'Data inválida'),
+    identidade: z.string().min(1, 'Identidade é obrigatório'),
     idPai: z.string().optional().nullable()
   });
 
   const isEditMode = !!id;
 
-  const [form, setForm] = useState({ nome: '', dataNascimentoISO: '', idPai: '' });
+  const [form, setForm] = useState({ nome: '', identidade: '', dataNascimentoISO: '', idPai: '' });
 
   const { data: familiares = [] } = useQuery({
     queryKey: ['familiares'],
@@ -40,6 +41,7 @@ export function FamiliarForm() {
       setForm({
         nome: familiarData.familiar.nome,
         dataNascimentoISO: familiarData.familiar.dataNascimentoISO,
+        identidade: familiarData.familiar.identidade,
         idPai: familiarData.familiar.idPai || ''
       });
     }
@@ -107,7 +109,14 @@ export function FamiliarForm() {
           onChange={(e) => setForm((s) => ({ ...s, nome: e.target.value }))}
         />
 
+         <Input
+          placeholder="Identidade"
+          value={form.identidade}
+          onChange={(e) => setForm((s) => ({ ...s, identidade: e.target.value }))}
+        />
+
         <Input
+          data-testid="dataNascimentoISO"
           type="date"
           value={form.dataNascimentoISO}
           onChange={(e) =>

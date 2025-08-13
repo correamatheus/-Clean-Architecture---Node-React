@@ -4,7 +4,6 @@ import { BrowserRouter, useNavigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ToastProvider } from '../../src/ui/ToastProvider';
 
-// Criar um wrapper para prover o contexto necessário
 const queryClient = new QueryClient();
 const wrapper = ({ children }: { children: React.ReactNode }) => (
   <QueryClientProvider client={queryClient}>
@@ -26,10 +25,12 @@ describe('FamiliarForm', () => {
     render(<FamiliarForm />, { wrapper });
 
     const nomeInput = screen.getByPlaceholderText(/nome/i);
-    const dataNascimentoInput = screen.getByRole('textbox', { type: /date/i });
+    const identidadeInput = screen.getByPlaceholderText(/identidade/i);
+    const dataNascimentoInput = screen.getAllByTestId('dataNascimentoISO')[0];
     const submitButton = screen.getByRole('button', { name: /salvar/i });
 
     expect(nomeInput).toBeInTheDocument();
+    expect(identidadeInput).toBeInTheDocument();
     expect(dataNascimentoInput).toBeInTheDocument();
     expect(submitButton).toBeInTheDocument();
   });
@@ -42,8 +43,8 @@ describe('FamiliarForm', () => {
       fireEvent.change(nomeInput, { target: { value: '' } });
       fireEvent.click(submitButton);
 
-      expect(await screen.findByText('Validação')).toBeInTheDocument(); // Verifica o título do toast
-      expect(await screen.findByText(/nome é obrigatório/i)).toBeInTheDocument(); // Verifica a mensagem de erro
+      expect(await screen.findByText('Validação')).toBeInTheDocument();
+      expect(await screen.findByText(/nome é obrigatório/i)).toBeInTheDocument(); 
   });
 
   it('deve navegar para home ao clicar em cancelar', () => {
